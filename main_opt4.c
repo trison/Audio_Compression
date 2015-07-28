@@ -99,5 +99,8 @@ int main()
 */
 	ftime(&stop);
 
+	char time_result = stop-start;
+	printf("time_result = %c\n", time_result);
+
 	return 0;
 }

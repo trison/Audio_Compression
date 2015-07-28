@@ -1,15 +1,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
- 
-#define SAMPLE_LENGTH 65536
-//#define SAMPLE_LENGTH 16777216
-
-// 2^24 = 16777216
-// 2^16 = 65536
+#include <sys/timeb>
 
 /* pwlog2 = piecewise log2 */
-
 /* first optimization - reverse order of intervals */
 unsigned long pwlog2(unsigned long x){
 
@@ -74,42 +68,39 @@ unsigned long func(unsigned long val){
 	return final;
 }
 
-unsigned long table[17];
-
 int main()
 {
-	unsigned long i=0;
-	unsigned long samples[SAMPLE_LENGTH];
-	unsigned long results[SAMPLE_LENGTH];
-	unsigned long result;
-	
-	//***GENERATE SAMPLES***
-	for(unsigned long i =0; i<=SAMPLE_LENGTH; i++){
-		samples[i] = i;
-	}
+    struct timeb stop, start;
+    ftime(&start);
 
-	table[0] = samples[1288];
+    unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
+    unsigned int results[5];
+    int i, j;
+    for(j = 0; j<10000000;j++){
+        for(i =0; i<5; i++){
+            results[i] = func(samples[i]);
+            //printf("samples[i] = %d\n", samples[i]);
+            //printf("results[i] = %d\n\n", results[i]);
+        }
+    }
+/*
+    *PRINT TO FILE***
 
+    FILE *fp;
+    char output[]="output.txt";
+    unsigned long n;
 
-	//***RUN ALGORITHM, GET RESULTS***
-	for(unsigned long j =0; j<=SAMPLE_LENGTH;j++){
-		results[j] = func(samples[j]);
-	}
+    fp=fopen(output,"w");
+    for(n=0;n<SAMPLE_LENGTH;n++){
+            fprintf(fp,"%lu\n",results[n]);
+    }
+    fclose(fp);*/
+/*
+    printf("table[0] = %lu\n",table[0]);
+*/
+    ftime(&stop);
+    short time_result = (1000.0 *(stop.time - start.time) + (stop.millitm-start.millitm));
+    printf("time_result = %hu\n", time_result);
 
-	//***PRINT TO FILE***
-	// FILE *fp;
-	// char output[]="output.txt";
-	// unsigned long n;
-
-	// fp=fopen(output,"w");
-	// for(n=0;n<SAMPLE_LENGTH;n++){
-	// 	fprintf(fp,"%lu\n",results[n]);
-	// }
-	// fclose(fp);
-
-	printf("table[0] = %lu\n",table[0]);
-
-
-
-  return 0;
+    return 0;
 }
