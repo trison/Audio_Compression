@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/timeb>
+#include <sys/timeb.h>
 
 unsigned long lookup[] = {
 	16,
@@ -26,57 +26,56 @@ unsigned long lookup[] = {
 /* pwlog2 = piecewise log2 */
 /* 2nd optimization - use lookup table */
 unsigned long pwlog2(unsigned long x){
-
-	if( x < 65536){//2^16
-		return( lookup[0] );
+	if( x >= 32768){/* range 2^25 to 2^16 */
+		return lookup[0];
 	}
-	if( x < 32768){
-		return( lookup[1]);
+	if( x >= 16384){
+		return lookup[1];
 	}
-	if( x < 16384){
-		return( lookup[2]);
+	if( x >= 8192){
+		return lookup[2];
 	}
-	if( x < 8192){
-		return( lookup[3]);
+	if( x >= 4096){
+		return lookup[3];
 	}
-	if( x < 4096){
-		return( lookup[4]);
+	if( x >= 2048){
+		return lookup[4];
 	}
-	if( x < 2048){
-		return( lookup[5]);
+	if( x >= 1024){
+		return lookup[5];
 	}
-	if( x < 1024){
-		return( lookup[6]);
+	if( x >= 512){
+		return lookup[6];
 	}
-	if( x < 512){
-		return( lookup[7]);
+	if( x >= 256){
+		return lookup[7];
 	}
-	if( x < 256){
-		return( lookup[8]);
+	if( x >= 128){
+		return lookup[8];
 	}
-	if( x < 128){
-		return( lookup[9]);
+	if( x >= 64){
+		return lookup[9];
 	}
-	if( x < 64){
-		return( lookup[10]);
+	if( x >= 32){
+		return lookup[10];
 	}
-	if( x < 32){
-		return( lookup[11]);
+	if( x >= 16){
+		return lookup[11];
 	}
-	if( x < 16){
-		return( lookup[12]);
+	if( x >= 8){
+		return lookup[12];
 	}
-	if( x < 8){
-		return( lookup[13]);
+	if( x >= 4){
+		return lookup[13];
 	}
-	if( x < 4){
-		return( lookup[14]);
+	if( x >= 2){
+		return lookup[14];
 	}
-	if( x < 2){
-		return( lookup[15]);
+	if( x >= 1){
+		return lookup[15];
 	}
-	if( x < 1){
-		return( lookup[16]); /* error */
+	if( x == 0){
+		return lookup[16];
 	}
 }
 
@@ -97,7 +96,7 @@ int main()
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
     unsigned int results[5];
     int i, j;
-    for(j = 0; j<10000000;j++){
+    for(j = 0; j<100000000;j++){
         for(i =0; i<5; i++){
             results[i] = func(samples[i]);
             //printf("samples[i] = %d\n", samples[i]);

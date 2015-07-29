@@ -1,61 +1,61 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/timeb>
+#include <sys/timeb.h>
 
 /* pwlog2 = piecewise log2 */
 /* first optimization - reverse order of intervals */
 unsigned long pwlog2(unsigned long x){
 
-	if( x < 65536){//2^16
+	if( x >= 32768){/* range 2^25 to 2^16 */
 		return( (15<<12) + ((x-32768)>>3));
 	}
-	if( x < 32768){
+	if( x >= 16384){
 		return( (14<<12) + ((x-16384)>>2));
 	}
-	if( x < 16384){
+	if( x >= 8192){
 		return( (13<<12) + ((x-8192)>>1));
 	}
-	if( x < 8192){
+	if( x >= 4096){
 		return( (12<<12) + ((x-4096)));
 	}
-	if( x < 4096){
+	if( x >= 2048){
 		return( (11<<12) + ((x-2048)<<1) );
 	}
-	if( x < 2048){
+	if( x >= 1024){
 		return( (10<<12) + ((x-1024)<<2));
 	}
-	if( x < 1024){
+	if( x >= 512){
 		return( (9<<12) + ((x-512)<<3));
 	}
-	if( x < 512){
+	if( x >= 256){
 		return( (8<<12) + ((x-256)<<4));
 	}
-	if( x < 256){
+	if( x >= 128){
 		return( (7<<12) + ((x-128)<<5));
 	}
-	if( x < 128){
+	if( x >= 64){
 		return( (6<<12) + ((x-64)<<6));
 	}
-	if( x < 64){
+	if( x >= 32){
 		return( (5<<12) + ((x-32)<<7));
 	}
-	if( x < 32){
+	if( x >= 16){
 		return((4<<12) + ((x-16)<<8));
 	}
-	if( x < 16){
+	if( x >= 8){
 		return((3<<12) + ((x-8)<<9));
 	}
-	if( x < 8){
+	if( x >= 4){
 		return((2<<12) + ((x-4)<<10));
 	}
-	if( x < 4){
+	if( x >= 2){
 		return((1<<12) + ((x-2)<<11));
 	}
-	if( x < 2){
+	if( x >= 1){
 		return((x-1) << 12);
 	}
-	if( x < 1){
+	if( x == 0){
 		return( 0); /* error */
 	}
 }
@@ -76,11 +76,11 @@ int main()
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
     unsigned int results[5];
     int i, j;
-    for(j = 0; j<10000000;j++){
+    for(j = 0; j<100000000;j++){
         for(i =0; i<5; i++){
             results[i] = func(samples[i]);
-            //printf("samples[i] = %d\n", samples[i]);
-            //printf("results[i] = %d\n\n", results[i]);
+            // printf("samples[i] = %d\n", samples[i]);
+            // printf("results[i] = %d\n\n", results[i]);
         }
     }
 /*

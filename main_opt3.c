@@ -1,61 +1,61 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/timeb>
+#include <sys/timeb.h>
 
 /* pwlog2 = piecewise log2 */
 /* third optimization - return constant values */
 unsigned long pwlog2(unsigned long x){
 
-	if( x < 65536){/* 2^16 */
+	if( x >= 32768){/* range 2^25 to 2^16 */
 		return 16;
 	}
-	if( x < 32768){
+	if( x >= 16384){
 		return 15;
 	}
-	if( x < 16384){
+	if( x >= 8192){
 		return 14;
 	}
-	if( x < 8192){
+	if( x >= 4096){
 		return 13;
 	}
-	if( x < 4096){
+	if( x >= 2048){
 		return 12;
 	}
-	if( x < 2048){
+	if( x >= 1024){
 		return 11;
 	}
-	if( x < 1024){
+	if( x >= 512){
 		return 10;
 	}
-	if( x < 512){
+	if( x >= 256){
 		return 9;
 	}
-	if( x < 256){
+	if( x >= 128){
 		return 8;
 	}
-	if( x < 128){
+	if( x >= 64){
 		return 7;
 	}
-	if( x < 64){
+	if( x >= 32){
 		return 6;
 	}
-	if( x < 32){
+	if( x >= 16){
 		return 5;
 	}
-	if( x < 16){
+	if( x >= 8){
 		return 4;
 	}
-	if( x < 8){
+	if( x >= 4){
 		return 3;
 	}
-	if( x < 4){
+	if( x >= 2){
 		return 2;
 	}
-	if( x < 2){
+	if( x >= 1){
 		return 1;
 	}
-	if( x < 1){
+	if( x == 0){
 		return 0; /* error */
 	}
 }
@@ -70,13 +70,13 @@ unsigned long func(unsigned long val){
 
 int main()
 {
-        struct timeb stop, start;
+    struct timeb stop, start;
     ftime(&start);
 
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
     unsigned int results[5];
     int i, j;
-    for(j = 0; j<10000000;j++){
+    for(j = 0; j<100000000;j++){
         for(i =0; i<5; i++){
             results[i] = func(samples[i]);
             //printf("samples[i] = %d\n", samples[i]);
