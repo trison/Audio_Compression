@@ -1,55 +1,55 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <sys/timeb.h>
 
 /* pwlog2 = piecewise log2 */
 /* fourth optimization - function inlining and operator strength reduction */
 static inline unsigned long pwlog2(unsigned long x){
 	if( x >= 32768){/* range 2^25 to 2^16 */
-		return( (15<<12) + ((x-32768)>>3));
+		return( (61440) + ((x-32768)>>3));
 	}
 	if( x >= 16384){
-		return( (14<<12) + ((x-16384)>>2));
+		return( (57344) + ((x-16384)>>2));
 	}
 	if( x >= 8192){
-		return( (13<<12) + ((x-8192)>>1));
+		return( (53248) + ((x-8192)>>1));
 	}
 	if( x >= 4096){
-		return( (12<<12) + ((x-4096)));
+		return( (49152) + ((x-4096)));
 	}
 	if( x >= 2048){
-		return( (11<<12) + ((x-2048)<<1) );
+		return( (45056) + ((x-2048)<<1) );
 	}
 	if( x >= 1024){
-		return( (10<<12) + ((x-1024)<<2));
+		return( (40960) + ((x-1024)<<2));
 	}
 	if( x >= 512){
-		return( (9<<12) + ((x-512)<<3));
+		return( (36864) + ((x-512)<<3));
 	}
 	if( x >= 256){
-		return( (8<<12) + ((x-256)<<4));
+		return( (32768) + ((x-256)<<4));
 	}
 	if( x >= 128){
-		return( (7<<12) + ((x-128)<<5));
+		return( (28672) + ((x-128)<<5));
 	}
 	if( x >= 64){
-		return( (6<<12) + ((x-64)<<6));
+		return( (24576) + ((x-64)<<6));
 	}
 	if( x >= 32){
-		return( (5<<12) + ((x-32)<<7));
+		return( (20480) + ((x-32)<<7));
 	}
 	if( x >= 16){
-		return((4<<12) + ((x-16)<<8));
+		return((16384) + ((x-16)<<8));
 	}
 	if( x >= 8){
-		return((3<<12) + ((x-8)<<9));
+		return((12288) + ((x-8)<<9));
 	}
 	if( x >= 4){
-		return((2<<12) + ((x-4)<<10));
+		return((8192) + ((x-4)<<10));
 	}
 	if( x >= 2){
-		return((1<<12) + ((x-2)<<11));
+		return((4096) + ((x-2)<<11));
 	}
 	if( x >= 1){
 		return((x-1) << 12);
