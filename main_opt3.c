@@ -7,7 +7,7 @@
 /* third optimization - return constant values */
 unsigned long pwlog2(unsigned long x){
 
-	if( x >= 32768){/* range 2^25 to 2^16 */
+	if( x >= 32768){/* range 2^16 to 2^24 */
 		return 16;
 	}
 	if( x >= 16384){
@@ -56,7 +56,7 @@ unsigned long pwlog2(unsigned long x){
 		return 1;
 	}
 	if( x == 0){
-		return 0; /* error */
+		return 0); /* error */
 	}
 }
 
@@ -76,7 +76,7 @@ int main()
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
     unsigned int results[5];
     int i, j;
-    for(j = 0; j<100000000;j++){
+    for(j = 0; j<10000000;j++){
         for(i =0; i<5; i++){
             results[i] = func(samples[i]);
             //printf("samples[i] = %d\n", samples[i]);

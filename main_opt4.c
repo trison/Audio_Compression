@@ -6,7 +6,7 @@
 /* pwlog2 = piecewise log2 */
 /* fourth optimization - function inlining and operator strength reduction */
 static inline unsigned long pwlog2(unsigned long x){
-	if( x >= 32768){/* range 2^25 to 2^16 */
+	if( x >= 32768){/* range 2^16 to 2^24 */
 		return( (61440) + ((x-32768)>>3));
 	}
 	if( x >= 16384){
@@ -73,6 +73,8 @@ int main()
     ftime(&start);
 
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
+
+
     unsigned int results[5];
     int i, j;
     for(j = 0; j<100000000;j++){

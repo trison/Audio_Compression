@@ -6,8 +6,7 @@
 /* pwlog2 = piecewise log2 */
 /* first optimization - reverse order of intervals */
 unsigned long pwlog2(unsigned long x){
-
-	if( x >= 32768){/* range 2^25 to 2^16 */
+	if( x >= 32768){/* range 2^16 to 2^24 */
 		return( (15<<12) + ((x-32768)>>3));
 	}
 	if( x >= 16384){

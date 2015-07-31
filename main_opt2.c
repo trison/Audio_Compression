@@ -26,7 +26,7 @@ unsigned long lookup[] = {
 /* pwlog2 = piecewise log2 */
 /* 2nd optimization - use lookup table */
 unsigned long pwlog2(unsigned long x){
-	if( x >= 32768){/* range 2^25 to 2^16 */
+	if( x >= 32768){/* range 2^16 to 2^24 */
 		return lookup[0];
 	}
 	if( x >= 16384){
