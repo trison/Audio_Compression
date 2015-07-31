@@ -69,9 +69,10 @@ unsigned long func(unsigned long val){
 
 int main()
 {
+	/* Initialize Timers
     struct timeb stop, start;
     ftime(&start);
-
+	*/
     unsigned int samples[] = {25, 300, 6500, 4000000, 16777215};
 
 
@@ -99,9 +100,11 @@ int main()
 /*
     printf("table[0] = %lu\n",table[0]);
 */
+    /*
     ftime(&stop);
     short time_result = (1000.0 *(stop.time - start.time) + (stop.millitm-start.millitm));
     printf("time_result = %hu\n", time_result);
+    */
 
     return 0;
 }
